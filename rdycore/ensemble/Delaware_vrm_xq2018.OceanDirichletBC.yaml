@@ -1,0 +1,68 @@
+physics:
+  flow:
+    mode: swe
+    source:
+      method: implicit_xq2018
+
+numerics:
+  spatial: fv
+  temporal: euler
+  riemann: roe
+
+logging:
+  level: detail #debug
+
+time:
+  final_time       : 864000.0
+  time_step        : 0.25
+  coupling_interval: 3600.0
+  unit             : seconds
+
+output:
+  format: xdmf
+  step_interval: 14400     # After how many steps, should the spatial output be written out?
+  batch_size: 24           # How many timeslices of spatial data should be put in a single .h5 file? 
+  time_series:
+    boundary_fluxes: 14400 # After how many steps, should the boundary flux be written out?
+
+grid:
+  file: /global/cfs/projectdirs/m4267/donghui/delaware/inputdata/delaware_vrm.exo
+
+# one region represents the whole domain
+regions:
+  - name: domain
+    grid_region_id: 1
+
+surface_composition:
+  - region: domain
+    material: smooth
+
+materials:
+  - name: smooth
+    properties:
+      manning:
+        file: /global/cfs/projectdirs/m4267/donghui/delaware/inputdata/delaware_vrm_manning.int32.bin
+        format: binary
+
+initial_conditions:
+  - region: domain
+    flow: domain_flow_ic
+
+boundaries:
+  - name: ocean_boundary
+    grid_boundary_id: 1
+
+boundary_conditions:
+  - boundaries: [ocean_boundary]
+    flow: outflow_bc
+
+flow_conditions:
+  - name: domain_flow_ic
+    type: dirichlet
+    format: binary
+    file: /global/cfs/projectdirs/m4267/donghui/delaware/inputdata/delaware_vrm.ic.int32.bin
+  - name: outflow_bc
+    type: dirichlet
+    height: 5
+    x_momentum: 0
+    y_momentum: 0

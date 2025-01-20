@@ -1,0 +1,83 @@
+#!/bin/bash
+#SBATCH -A m4267_g
+#SBATCH -C gpu
+#SBATCH -q regular
+#SBATCH -t 03:00:00
+#SBATCH -N 1
+#SBATCH --ntasks-per-node=4
+#SBATCH -c 4
+#SBATCH --gpus-per-task=1
+
+N=1;n=4
+
+G=$n
+
+# ELM 1km simulated runoff forcing
+export RUNOFF=AMC_050
+
+# Sets the RDycore directory
+export RDYCORE_DIR=/global/cfs/projectdirs/m4267/donghui/RDycore-test
+
+# Inputdeck for RDycore
+export YAML_FILE=Delaware_vrm_xq2018.OceanDirichletBC.yaml
+
+# Set machine
+export PM_NODE_TYPE=pm-gpu
+
+# Load appropriate modules
+source ${RDYCORE_DIR}/config/set_petsc_settings.sh --mach $PM_NODE_TYPE --config 3
+
+# Sets the path to the `rdycore` exe. It assumes that you had build RDycore
+# in the <RDYCORE_DIR>/build-${PETSC_ARCH}.
+export RDYCORE_EXE=${RDYCORE_DIR}/build-${PETSC_ARCH}/bin/rdycore
+
+# Create a directory for the slurm job in which all log files would be saved
+export DEST_DIR=gpu.vrm.xq2018.${RUNOFF}.N_${N}.dirichlet.elm1km.${SLURM_JOB_ID}
+mkdir ${DEST_DIR}
+
+# Set LD_LIBRARY_PATH (not sure if this is needed anymore)
+export LD_LIBRARY_PATH=$PETSC_DIR/$PETSC_ARCH/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
+
+# Set GPU related setting
+export MPICH_GPU_SUPPORT_ENABLED=1
+export GPU_AWARE_MPI=0
+
+# This is for the case when the mesh is in .h5
+export HDF5_USE_FILE_LOCKING=FALSE
+
+# Log file to save the output
+LOG_FILE=${PETSC_ARCH}.vrm.xq2018.ceed_gpu.N_${N}.${SLURM_JOB_ID}.log
+
+# Save environmental settings
+env > env.${SLURM_JOB_ID}.txt
+
+# Run the code
+srun                        \
+-G${G}                      \
+-N $N -n $n -c 32           \
+${RDYCORE_EXE}              \
+${YAML_FILE}                \
+-unstructured_bc_dir         /global/cfs/projectdirs/m4267/donghui/delaware/delaware_boundary \
+-unstructured_bc_start_date  2011,08,26,0,0 \
+-unstructured_bc_mesh_file   /global/cfs/projectdirs/m4267/donghui/delaware/delaware_boundary/boundary_x_y.int32.bin \
+-unstructured_rain_dir       /global/cfs/projectdirs/m4267/donghui/delaware/runoff/runoff_${RUNOFF} \
+-unstructured_rain_start_date 2011,08,26,0,0 \
+-unstructured_rain_mesh_file  /global/cfs/projectdirs/m4267/donghui/delaware/runoff/runoff_${RUNOFF}/forcing_x_y.int32.bin \
+-dm_plex_name                "grid" \
+-ceed /gpu/cuda/shared      \
+-dm_vec_type cuda           \
+-ts_monitor                 \
+-log_view                   \
+-log_view_gpu_time          \
+-use_gpu_aware_mpi ${GPU_AWARE_MPI} \
+2>&1 | tee ${LOG_FILE}
+
+# Move any reports to the slurm job dir
+for file in `ls report*`; do mv $file ${SLURM_JOB_ID}.$file ; done
+
+# Move additional files to the slurm job dir
+#mv *${SLURM_JOB_ID}.* ${DEST_DIR}
+#cp ${YAML_FILE} ${DEST_DIR}
+
+#mv output ${DEST_DIR}
