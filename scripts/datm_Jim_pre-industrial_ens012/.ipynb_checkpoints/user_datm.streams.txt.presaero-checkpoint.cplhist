@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<file id="stream" version="1.0">
+<dataSource>
+   GENERIC
+</dataSource>
+<domainInfo>
+  <variableNames>
+     time         time
+        doma_lon     lon
+        doma_lat     lat
+        doma_aream   area
+        doma_mask    mask
+  </variableNames>
+  <filePath>
+     /global/cfs/cdirs/m3780/benedict/forDonghui/t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012/run
+  </filePath>
+  <fileNames>
+     t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1d.2011-08-26-00000.nc
+  </fileNames>
+</domainInfo>
+<fieldInfo>
+   <variableNames>
+     a2x1d_Faxa_bcphiwet  bcphiwet
+        a2x1d_Faxa_bcphodry  bcphodry
+        a2x1d_Faxa_bcphidry  bcphidry
+        a2x1d_Faxa_ocphiwet  ocphiwet
+        a2x1d_Faxa_ocphidry  ocphidry
+        a2x1d_Faxa_ocphodry  ocphodry
+        a2x1d_Faxa_dstwet1   dstwet1
+        a2x1d_Faxa_dstdry1   dstdry1
+        a2x1d_Faxa_dstwet2   dstwet2
+        a2x1d_Faxa_dstdry2   dstdry2
+        a2x1d_Faxa_dstwet3   dstwet3
+        a2x1d_Faxa_dstdry3   dstdry3
+        a2x1d_Faxa_dstwet4   dstwet4
+        a2x1d_Faxa_dstdry4   dstdry4
+   </variableNames>
+   <filePath>
+     /global/cfs/cdirs/m3780/benedict/forDonghui/t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012/run
+   </filePath>
+   <fileNames>
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1d.2011-08-26-00000.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1d.2011-08-27-00000.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1d.2011-08-28-00000.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1d.2011-08-29-00000.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1d.2011-08-30-00000.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1d.2011-08-31-00000.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1d.2011-09-01-00000.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1d.2011-09-02-00000.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1d.2011-09-03-00000.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1d.2011-09-04-00000.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1d.2011-09-05-00000.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1d.2011-09-06-00000.nc
+   </fileNames>
+   <offset>
+      0
+   </offset>
+</fieldInfo>
+</file>

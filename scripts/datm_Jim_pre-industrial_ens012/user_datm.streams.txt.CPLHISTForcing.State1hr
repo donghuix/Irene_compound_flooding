@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<file id="stream" version="1.0">
+<dataSource>
+   GENERIC
+</dataSource>
+<domainInfo>
+  <variableNames>
+     time         time
+        doma_lon     lon
+        doma_lat     lat
+        doma_aream   area
+        doma_mask    mask
+  </variableNames>
+  <filePath>
+     /global/cfs/cdirs/m3780/benedict/forDonghui/t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012/run
+  </filePath>
+  <fileNames>
+     t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1h.2011-08-26-46800.nc
+  </fileNames>
+</domainInfo>
+<fieldInfo>
+   <variableNames>
+     a2x1h_Sa_u  u
+     a2x1h_Sa_v  v
+   </variableNames>
+   <filePath>
+     /global/cfs/cdirs/m3780/benedict/forDonghui/t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012/run
+   </filePath>
+   <fileNames>
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1h.2011-08-26-46800.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1h.2011-08-27-46800.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1h.2011-08-28-46800.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1h.2011-08-29-46800.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1h.2011-08-30-46800.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1h.2011-08-31-46800.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1h.2011-09-01-46800.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1h.2011-09-02-46800.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1h.2011-09-03-46800.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1h.2011-09-04-46800.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1h.2011-09-05-46800.nc
+    t46_v1.2-NATL-F2010C5-v2_L71.2011082512.ens012.cpl.ha2x1h.2011-09-06-46800.nc
+   </fileNames>
+   <offset>
+      900
+   </offset>
+</fieldInfo>
+</file>
