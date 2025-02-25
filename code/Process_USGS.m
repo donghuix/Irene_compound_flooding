@@ -1,11 +1,20 @@
 clear;close all;clc;
 
 addpath('/Users/xudo627/Developments/getPanoply_cMap/');
+addpath('/Users/xudo627/Developments/mylib/USGS-download/');
+
 cmap = getPanoply_cMap('NEO_mopitt_co');
 
 name = 'delaware';
 proj = projcrs(26918); % NAD83 / UTM zone 18N
 rivers = shaperead('/Users/xudo627/Developments/RDycore-tools/data/delaware/hydrorivers.shp');
+coordx = ncread('~/Developments/RDycore-tools/data/delaware/delaware_30m.exo','coordx');
+coordy = ncread('~/Developments/RDycore-tools/data/delaware/delaware_30m.exo','coordy');
+connect = ncread('~/Developments/RDycore-tools/data/delaware/delaware_30m.exo','connect1');
+xv = coordx(connect);
+yv = coordy(connect);
+xc = nanmean(xv)';
+yc = nanmean(yv)';
 
 load('../data/domain.mat');
 [latbnd,lonbnd] = projinv(proj,xbnd,ybnd);
@@ -34,16 +43,32 @@ else
     k = 1;
     sites = struct([]);
     for i = 1 : length(C{1})
+        disp(i);
         lon = str2num(C{1,3}{i});
         lat = str2num(C{1,2}{i});
-        
+
         ind = find(strcmp(ss,C{1,1}{i}));
     
         if inpoly2([lon lat],[lonbnd latbnd]) && ~isempty(ind)
+            if k == 90
+                x = 516329;
+                y = 4453800;
+            else
+                [x,y] = projfwd(proj,lat,lon);
+            end
+        
+            dist  = (xc - x).^2 + (yc - y).^2;
+            [B,I] = sort(dist,'ascend');
+            idx   = I(1:5000);
+
             sites(k).id  = C{1,1}{i};
             sites(k).lon = lon;
             sites(k).lat = lat;
-            
+            sites(k).x   = x;
+            sites(k).y   = y;
+            sites(k).idx = idx;
+            [DA,outfilename] = retrieve_drainage_area(sites(k).id);
+            sites(k).area    = DA;
             sites(k).dn = dn(ind);
             sites(k).dq = dq(ind).*0.3048;
             sites(k).dqmax = max(dq(ind)).*0.3048;
