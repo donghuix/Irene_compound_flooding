@@ -38,3 +38,47 @@ else
     
     save('../data/SLR.mat','SLR');
 end
+
+% Read temperature projection
+models = {'GFDL-ESM4','IPSL-CM6A-LR','MPI-ESM1-2-HR','MRI-ESM2-0','UKESM1-0-LL'};
+fdir   = '/global/cfs/projectdirs/m3780/donghui/lnd-rof-2way-fut/';
+foc = NaN(4,9,length(models));
+for i = 1 : length(models)
+    if i == 5
+    fctl = [fdir models{i} '/historical/tas/' lower(models{i}) '_r1i1p1f2_w5e5_historical_tas_global_daily_2011_2014.nc'];
+    else
+    fctl = [fdir models{i} '/historical/tas/' lower(models{i}) '_r1i1p1f1_w5e5_historical_tas_global_daily_2011_2014.nc'];
+    end
+    lon  = ncread(fctl,'lon');
+    lat  = ncread(fctl,'lat');
+    [lon,lat] = meshgrid(lon,lat);
+    lon = lon'; lat = lat';
+    disp('Mesh size');
+    disp(size(lon));
+
+    idx = NaN(4,1);
+    for j = 1 : 4
+        dist = (lon - SLR(j).lon).^2 + (lat - SLR(j).lat).^2;
+        idx(j) = find(dist == min(dist(:)));
+        disp(idx(j));
+    end
+    
+    disp('Data size');
+    ctl  = nanmean(ncread(fctl,'tas'),3);
+    disp(size(ctl));
+    
+    files = dir([fdir models{i} '/ssp585/tas/*.nc']);
+    for j = 1 : length(files)
+        fname = fullfile(files(j).folder,files(j).name);
+        disp(fname);
+        fut   = nanmean(ncread(fname,'tas'),3);
+        foc(:,j,i) = fut(idx) - ctl(idx);
+    end
+end
+for j = 1 : 4
+    SLR(j).dTa = foc(j,:,:);
+end
+save('../data/SLR.mat','SLR');
+
+
+
