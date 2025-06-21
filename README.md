@@ -25,4 +25,8 @@ make -j4 install
 3. Future
     - TODO: how to use projected mean sea-level to perturb BC, maybe 0.5m, 0.75m, 1m?
     - TODO: how to perturb land use and land cover
+## Benchmark
+Satellite inundation observation: https://global-flood-database.cloudtostreet.info/#interactive-map
 
+hire-ensemble8: calibrate Manning coefficient
+hire-ensemble6: test AMC conditions 
